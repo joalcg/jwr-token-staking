@@ -15,7 +15,7 @@ type InputButtonProps<T> = {
       title?: string;
       titleId?: string;
     } & React.RefAttributes<SVGSVGElement>
-  >;
+  > | null; // Allow Icon to be nullable
   IconTitle?: string;
   IconClass?: string;
   position: "before" | "after";
@@ -36,7 +36,7 @@ export const InputButton = <T extends { toString: () => string } | undefined = s
   IconTitle,
   position,
 }: InputButtonProps<T>) => {
-  const inputReft = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const pausedMsg = paused ? <div className="badge">* Contract Paused</div> : null;
   const pausedClass = paused ? "btn-disabled" : "";
 
@@ -46,19 +46,19 @@ export const InputButton = <T extends { toString: () => string } | undefined = s
   } else if (disabled) {
     modifier = "border-disabled bg-base-300";
   }
-  // Runs only when reFocus prop is passed, useful for setting the cursor
-  // at the end of the input. Example AddressInput
-  const onFocus = (e: FocusEvent<HTMLInputElement, Element>) => {
-    if (reFocus !== undefined) {
+
+  const onFocus = (e: FocusEvent<HTMLInputElement>) => {
+    if (reFocus) {
       e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length);
     }
   };
+
   useEffect(() => {
-    if (reFocus !== undefined && reFocus === true) inputReft.current?.focus();
+    if (reFocus) inputRef.current?.focus();
   }, [reFocus]);
 
   const clickCallback = () => {
-    onClick(inputReft.current?.value || null);
+    onClick(inputRef.current?.value || null);
   };
 
   return (
@@ -71,14 +71,19 @@ export const InputButton = <T extends { toString: () => string } | undefined = s
           defaultValue={value?.toString()}
           disabled={disabled}
           autoComplete="off"
-          ref={inputReft}
+          ref={inputRef}
           onFocus={onFocus}
+          aria-label={name} // Adding aria-label for accessibility
         />
 
-        <button className={`btn btn-primary h-[2.2rem] min-h-[2.2rem] ${pausedClass}`} onClick={clickCallback}>
-          {position === "before" && <Icon title={IconTitle} className={IconClass} />}
+        <button
+          className={`btn btn-primary h-[2.2rem] min-h-[2.2rem] ${pausedClass}`}
+          onClick={clickCallback}
+          aria-label={btnLabel} // Adding aria-label for the button
+        >
+          {position === "before" && Icon && <Icon title={IconTitle} className={IconClass} />}
           {btnLabel}
-          {position === "after" && <Icon title={IconTitle} className={IconClass} />}
+          {position === "after" && Icon && <Icon title={IconTitle} className={IconClass} />}
         </button>
       </div>
       {pausedMsg}
