@@ -21,12 +21,10 @@ const Home: NextPage = () => {
     args: [connectedAddress],
   });
 
-  const { data: stakingPaused1 } = useScaffoldReadContract({
+  const { data: stakingPaused } = useScaffoldReadContract({
     contractName: "StakingContract",
     functionName: "paused",
   });
-
-  const stakingPaused = true;
 
   const notConnectedMsg = (
     <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
