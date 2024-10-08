@@ -2,23 +2,16 @@
 
 import { useState } from "react";
 import type { NextPage } from "next";
-import { Address as AddressType } from "viem";
 import { useAccount } from "wagmi";
-import { type BaseError, useReadContracts } from "wagmi";
 import {
-  ArrowsRightLeftIcon,
   BuildingLibraryIcon,
-  PauseCircleIcon,
-  PlayCircleIcon,
   WalletIcon,
 } from "@heroicons/react/24/outline";
-import { Address, AddressInput } from "~~/components/scaffold-eth";
-import { useDeployedContractInfo, useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
+import { Address } from "~~/components/scaffold-eth";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 const Home: NextPage = () => {
   const { address: connectedAddress, isConnected } = useAccount();
-
-  const [inputAddress, setInputAddress] = useState<AddressType>();
   const [stakeValue, setStakeValue] = useState("");
   const [withdrawValue, setWithdrawValue] = useState("");
   const [claimValue, setClaimValue] = useState("");
@@ -32,11 +25,6 @@ const Home: NextPage = () => {
     contractName: "JWRToken",
     functionName: "balanceOf",
     args: [connectedAddress],
-  });
-
-  const { data: stakingOwner } = useScaffoldReadContract({
-    contractName: "StakingContract",
-    functionName: "owner",
   });
 
   const { data: stakingPaused } = useScaffoldReadContract({
@@ -55,7 +43,10 @@ const Home: NextPage = () => {
     </div>
   );
 
-  const ownerIsConnected = stakingOwner === connectedAddress;
+  const pausedClass = stakingPaused ? 'btn-disabled' : ''
+  const pausedMsg = stakingPaused ? <div className="indicator-item badge">
+    * Contract Paused
+  </div> : null
 
   return (
     <>
@@ -70,122 +61,84 @@ const Home: NextPage = () => {
             <Address address={connectedAddress} />
           </div>
           <div>
-            Balance: {yourTokenSymbol} {yourTokenBalance}
+            Your Balance: {yourTokenSymbol} {yourTokenBalance}
           </div>
         </div>
+
         {!isConnected && notConnectedMsg}
 
-        {stakingPaused && <>Staking paused!</>}
+        {stakingPaused && <div role="alert" className="alert alert-warning my-8">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 shrink-0 stroke-current"
+            fill="none"
+            viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <span>Warning: Contract is paused!</span>
+        </div>}
 
-        {ownerIsConnected && !stakingPaused && (
-          <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-            <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-              <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-                <button className="btn btn-error">
-                  <PauseCircleIcon className="h-8 w-8 fill-secondary" />
-                  <p>Pause Staking Contract</p>
-                </button>
-              </div>
+        <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
+          <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
+            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl indicator">
+              <input
+                className="input input-bordered w-full max-w-xs"
+                placeholder="Amount to stake"
+                value={stakeValue}
+                onChange={e => setStakeValue(e.target.value)}
+                autoComplete="off"
+              />
+
+              <button className={`btn btn-primary h-[2.2rem] min-h-[2.2rem] ${pausedClass}`}>
+                <BuildingLibraryIcon className="h-8 w-8 fill-secondary" />
+                Stake
+              </button>
+              {pausedMsg}
             </div>
           </div>
-        )}
+        </div>
 
-        {ownerIsConnected && stakingPaused && (
-          <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-            <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-              <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-                <button className="btn btn-success">
-                  <PlayCircleIcon className="h-8 w-8 fill-secondary" />
-                  <p>Resume Staking Contract</p>
-                </button>
-              </div>
+        <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
+          <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
+            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl indicator">
+              <input
+                className="input input-bordered w-full max-w-xs"
+                placeholder="Amount to withdraw"
+                value={withdrawValue}
+                onChange={e => setWithdrawValue(e.target.value)}
+                autoComplete="off"
+              />
+              <button className={`btn btn-primary h-[2.2rem] min-h-[2.2rem] ${pausedClass}`}>
+                <BuildingLibraryIcon className="h-8 w-8 fill-secondary" />
+                Withdraw
+              </button>
+              {pausedMsg}
             </div>
           </div>
-        )}
+        </div>
 
-        {ownerIsConnected && (
-          <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-            <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-              <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-                <div className="grid h-16 flex-grow place-items-center">Change ownership:</div>
-                <div className="grid h-16 flex-grow place-items-center">
-                  <AddressInput
-                    placeholder="Destination Address"
-                    value={inputAddress ?? ""}
-                    onChange={value => setInputAddress(value as AddressType)}
-                  />
-                </div>
-                <div className="grid h-16 flex-grow place-items-center">
-                  <button className="btn btn-success">
-                    <ArrowsRightLeftIcon className="h-8 w-8 fill-secondary" />
-                    <p>Set new owner</p>
-                  </button>
-                </div>
-              </div>
+        <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
+          <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
+            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl indicator">
+              <input
+                className="input input-bordered w-full max-w-xs"
+                placeholder="Amount to claim"
+                value={claimValue}
+                onChange={e => setClaimValue(e.target.value)}
+                autoComplete="off"
+              />
+              <button className={`btn btn-primary h-[2.2rem] min-h-[2.2rem] ${pausedClass}`}>
+                <BuildingLibraryIcon className="h-8 w-8 fill-secondary" />
+                Claim
+              </button>
+              {pausedMsg}
             </div>
           </div>
-        )}
-
-        {!stakingPaused && (
-          <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-            <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-              <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-                <input
-                  className="input input-bordered w-full max-w-xs"
-                  placeholder="Amount to stake"
-                  value={stakeValue}
-                  onChange={e => setStakeValue(e.target.value)}
-                  autoComplete="off"
-                />
-
-                <button className="btn btn-primary h-[2.2rem] min-h-[2.2rem]">
-                  <BuildingLibraryIcon className="h-8 w-8 fill-secondary" />
-                  Stake
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {!stakingPaused && (
-          <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-            <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-              <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-                <input
-                  className="input input-bordered w-full max-w-xs"
-                  placeholder="Amount to withdraw"
-                  value={withdrawValue}
-                  onChange={e => setWithdrawValue(e.target.value)}
-                  autoComplete="off"
-                />
-                <button className="btn btn-primary h-[2.2rem] min-h-[2.2rem]">
-                  <BuildingLibraryIcon className="h-8 w-8 fill-secondary" />
-                  Withdraw
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {!stakingPaused && (
-          <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-            <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-              <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-                <input
-                  className="input input-bordered w-full max-w-xs"
-                  placeholder="Amount to claim"
-                  value={claimValue}
-                  onChange={e => setClaimValue(e.target.value)}
-                  autoComplete="off"
-                />
-                <button className="btn btn-primary h-[2.2rem] min-h-[2.2rem]">
-                  <BuildingLibraryIcon className="h-8 w-8 fill-secondary" />
-                  Claim
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
     </>
   );

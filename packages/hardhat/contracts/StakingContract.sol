@@ -106,8 +106,4 @@ contract StakingContract is Ownable, ReentrancyGuard, Pausable {
     function unpause() public onlyOwner { // safeguard function to unpause contract
         _unpause();
     }
-
-    function balanceOf(address user) public returns () {
-
-    }
 }
