@@ -23,7 +23,7 @@ contract StakingContract is Ownable, ReentrancyGuard, Pausable {
     event Withdrawn(address indexed user, uint256 amount);
     event RewardClaimed(address indexed user, uint256 amount);
 
-    constructor(IERC20 _stakingToken, uint256 _rewardRate) Ownable(msg.sender) {
+    constructor(IERC20 _stakingToken, uint256 _rewardRate, address _owner) Ownable(_owner) {
         stakingToken = _stakingToken;
         rewardRate = _rewardRate;
     }

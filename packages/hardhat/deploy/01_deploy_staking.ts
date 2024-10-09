@@ -27,7 +27,7 @@ const deployStakingContract: DeployFunction = async function (hre: HardhatRuntim
   await deploy("StakingContract", {
     from: deployer,
     // Contract constructor arguments
-    args: [jwrTokenContract.address, rewardRate],
+    args: [jwrTokenContract.address, rewardRate, wallet],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
@@ -38,8 +38,6 @@ const deployStakingContract: DeployFunction = async function (hre: HardhatRuntim
   const stakingContract = await hre.ethers.getContract<Contract>("StakingContract", deployer);
   const stakingToken = await stakingContract.stakingToken();
   console.log("👋 Staking for ", stakingToken, " contract deployed!");
-  stakingContract.transferOwnership(wallet);
-  console.log("👋 Ownership changed to ", wallet);
 };
 
 export default deployStakingContract;

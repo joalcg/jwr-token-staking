@@ -90,7 +90,7 @@ const Home: NextPage = () => {
             <Address address={connectedAddress} />
           </div>
           <div>
-            Your Balance: {yourTokenSymbol} {yourTokenBalance}
+            Your Balance: {yourTokenSymbol} {yourTokenBalance || 0}
           </div>
         </div>
 

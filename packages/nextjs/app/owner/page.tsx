@@ -4,22 +4,47 @@ import { useState } from "react";
 import type { NextPage } from "next";
 import { Address as AddressType } from "viem";
 import { useAccount } from "wagmi";
-import { ArrowsRightLeftIcon, PauseCircleIcon, PlayCircleIcon } from "@heroicons/react/24/outline";
-import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
+import {
+  ArrowsRightLeftIcon,
+  PauseCircleIcon,
+  PlayCircleIcon
+} from "@heroicons/react/24/outline";
+import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 const Owner: NextPage = () => {
+  const stakingContractName = "StakingContract";
   const [inputAddress, setInputAddress] = useState<AddressType>();
   const { address: connectedAddress } = useAccount();
   const { data: stakingOwner } = useScaffoldReadContract({
-    contractName: "StakingContract",
+    contractName: stakingContractName,
     functionName: "owner",
   });
 
   const { data: stakingPaused } = useScaffoldReadContract({
-    contractName: "StakingContract",
+    contractName: stakingContractName,
     functionName: "paused",
   });
   const ownerIsConnected = stakingOwner === connectedAddress;
+  const { writeContractAsync: writeYourContractAsync } = useScaffoldWriteContract(stakingContractName);
+  const pauseUnpause = async (action: "pause" | "unpause") => {
+    try {
+      await writeYourContractAsync({
+        functionName: action,
+      });
+    } catch (e) {
+      console.error("Error pausing:", e);
+    }
+  };
+  const changeOwner = async () => {
+    try {
+      await writeYourContractAsync({
+        functionName: "transferOwnership",
+        args: [inputAddress],
+      });
+    } catch (e) {
+      console.error("Error pausing:", e);
+    }
+  };
 
   if (!ownerIsConnected)
     return (
@@ -38,7 +63,7 @@ const Owner: NextPage = () => {
               d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <span>Forbidden! owner only section.</span>
+          <span>Forbidden access! owner only section.</span>
         </div>
       </div>
     );
@@ -51,12 +76,12 @@ const Owner: NextPage = () => {
           <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-s rounded-3xl h-full justify-center">
             <div className="grid h-16 flex-grow place-items-center">Change status:</div>
             {stakingPaused ? (
-              <button className="btn btn-success">
+              <button className="btn btn-success" onClick={() => pauseUnpause("unpause")}>
                 <PlayCircleIcon className="h-8 w-8 fill-secondary" />
                 <p>Resume Staking Contract</p>
               </button>
             ) : (
-              <button className="btn btn-error">
+              <button className="btn btn-error" onClick={() => pauseUnpause("pause")}>
                 <PauseCircleIcon className="h-8 w-8 fill-secondary" />
                 <p>Pause Staking Contract</p>
               </button>
@@ -75,7 +100,7 @@ const Owner: NextPage = () => {
                   value={inputAddress ?? ""}
                   onChange={e => setInputAddress(e.target.value as AddressType)}
                 />
-                <button className="btn btn-success">
+                <button className="btn btn-success" onClick={changeOwner}>
                   <ArrowsRightLeftIcon className="h-8 w-8 fill-secondary" />
                   <p>Change</p>
                 </button>
