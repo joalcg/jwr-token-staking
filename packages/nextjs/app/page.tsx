@@ -3,8 +3,8 @@
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { BuildingLibraryIcon, CircleStackIcon, FireIcon, WalletIcon } from "@heroicons/react/24/outline";
+import { InputButton } from "~~/components/InputButton";
 import { Address } from "~~/components/scaffold-eth";
-import { InputButton } from "~~/components/scaffold-eth/InputButton";
 import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 const Home: NextPage = () => {

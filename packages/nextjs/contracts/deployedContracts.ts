@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     JWRToken: {
-      address: "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
       abi: [
         {
           inputs: [
@@ -329,7 +329,7 @@ const deployedContracts = {
       },
     },
     StakingContract: {
-      address: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
       abi: [
         {
           inputs: [
@@ -342,6 +342,11 @@ const deployedContracts = {
               internalType: "uint256",
               name: "_rewardRate",
               type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "_owner",
+              type: "address",
             },
           ],
           stateMutability: "nonpayable",
