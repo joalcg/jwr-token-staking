@@ -19,7 +19,7 @@ const deployStakingContract: DeployFunction = async function (hre: HardhatRuntim
     with a random private key in the .env file (then used on hardhat.config.ts)
     You can run the `yarn account` command to check your balance in every network.
   */
-  const { deployer } = await hre.getNamedAccounts();
+  const { deployer, wallet } = await hre.getNamedAccounts();
   const { deploy, get } = hre.deployments;
   const jwrTokenContract = await get("JWRToken");
   const rewardRate = 1;
@@ -38,6 +38,8 @@ const deployStakingContract: DeployFunction = async function (hre: HardhatRuntim
   const stakingContract = await hre.ethers.getContract<Contract>("StakingContract", deployer);
   const stakingToken = await stakingContract.stakingToken();
   console.log("👋 Staking for ", stakingToken, " contract deployed!");
+  stakingContract.transferOwnership(wallet);
+  console.log("👋 Ownership changed to ", wallet);
 };
 
 export default deployStakingContract;
