@@ -19,6 +19,7 @@ type InputButtonProps<T> = {
   IconTitle?: string;
   IconClass?: string;
   position: "before" | "after";
+  useInput: boolean;
 };
 
 export const InputButton = <T extends { toString: () => string } | undefined = string>({
@@ -35,6 +36,7 @@ export const InputButton = <T extends { toString: () => string } | undefined = s
   IconClass,
   IconTitle,
   position,
+  useInput,
 }: InputButtonProps<T>) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const pausedMsg = paused ? <div className="badge">* Contract Paused</div> : null;
@@ -64,7 +66,7 @@ export const InputButton = <T extends { toString: () => string } | undefined = s
   return (
     <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl indicator">
       <div className={`flex border-2 border-base-300 bg-base-200 rounded-full text-accent ${modifier}`}>
-        <input
+        {useInput && <input
           className="input input-ghost focus-within:border-transparent focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
           placeholder={placeholder}
           name={name}
@@ -74,7 +76,7 @@ export const InputButton = <T extends { toString: () => string } | undefined = s
           ref={inputRef}
           onFocus={onFocus}
           aria-label={name} // Adding aria-label for accessibility
-        />
+        />}
 
         <button
           className={`btn btn-primary h-[2.2rem] min-h-[2.2rem] ${pausedClass}`}

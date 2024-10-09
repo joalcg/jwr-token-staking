@@ -112,6 +112,7 @@ const Home: NextPage = () => {
                 Icon={CircleStackIcon}
                 IconClass="h-8 w-8 fill-secondary"
                 IconTitle="Stake"
+                useInput={true}
               />
             </div>
             <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
@@ -124,6 +125,7 @@ const Home: NextPage = () => {
                 Icon={BuildingLibraryIcon}
                 IconClass="h-8 w-8 fill-secondary"
                 IconTitle="Withdraw"
+                useInput={true}
               />
             </div>
             <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
@@ -136,6 +138,7 @@ const Home: NextPage = () => {
                 Icon={FireIcon}
                 IconClass="h-8 w-8 fill-secondary"
                 IconTitle="Claim"
+                useInput={false}
               />
             </div>
           </div>
