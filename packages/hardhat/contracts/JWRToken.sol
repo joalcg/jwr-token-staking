@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.27;
 
-contract JWRToken {
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract JWRToken is Ownable {
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(address indexed owner, address indexed spender, uint256 value);
 
@@ -24,8 +26,8 @@ contract JWRToken {
         _;
     }
 
-    constructor(uint256 initialSupply) {
-        _mint(msg.sender, initialSupply);
+    constructor(uint256 initialSupply, address owner) Ownable(owner) {
+        _mint(owner, initialSupply);
     }
 
     function totalSupply() public view returns (uint256) {
