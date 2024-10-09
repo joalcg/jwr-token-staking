@@ -26,27 +26,44 @@ const Home: NextPage = () => {
     functionName: "paused",
   });
 
-  const { writeContractAsync: stakeTokens, isMining: isStaking } = useScaffoldWriteContract("StakingContract");
+  const { writeContractAsync: stake, isMining: isStaking } = useScaffoldWriteContract("StakingContract");
+  const { writeContractAsync: withdraw, isMining: isWithdrawing } = useScaffoldWriteContract("StakingContract");
+  const { writeContractAsync: claimRewards, isMining: isClaimingRewards } = useScaffoldWriteContract("StakingContract");
 
   const onStakeClick = async (input: string | null) => {
     try {
       const amountInBigNumber = BigInt(input ?? "0");
-      console.log("amountInBigNumber", amountInBigNumber);
-      await stakeTokens({
+      await stake({
         functionName: "stake",
-        args: [amountInBigNumber], // Arguments for the stake function, such as the staking amount
+        args: [amountInBigNumber],
       });
     } catch (error) {
       console.error("Stake failed", error);
     }
   };
 
-  const onWithdrawClick = async () => {
-    console.log("onWithdrawClick");
+  const onWithdrawClick = async (input: string | null) => {
+    try {
+      const amountInBigNumber = BigInt(input ?? "0");
+      await withdraw({
+        functionName: "withdraw",
+        args: [amountInBigNumber],
+      });
+    } catch (error) {
+      console.error("Withdraw failed", error);
+    }
   };
 
-  const onClaimClick = async () => {
-    console.log("onClaimClick");
+  const onClaimClick = async (input: string | null) => {
+    try {
+      const amountInBigNumber = BigInt(input ?? "0"); //TODO: remove??
+      console.log(amountInBigNumber);
+      await claimRewards({
+        functionName: "claimRewards",
+      });
+    } catch (error) {
+      console.error("Claim failed", error);
+    }
   };
 
   const notConnectedMsg = (
@@ -116,7 +133,7 @@ const Home: NextPage = () => {
             </div>
             <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
               <InputButton
-                btnLabel="Withdraw"
+                btnLabel={isWithdrawing ? "Withdrawing" : "Withdraw"}
                 paused={stakingPaused}
                 onClick={onWithdrawClick}
                 value={""}
@@ -128,7 +145,7 @@ const Home: NextPage = () => {
             </div>
             <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
               <InputButton
-                btnLabel="Claim"
+                btnLabel={isClaimingRewards ? "Claiming" : "Claim"}
                 paused={stakingPaused}
                 onClick={onClaimClick}
                 value={""}
