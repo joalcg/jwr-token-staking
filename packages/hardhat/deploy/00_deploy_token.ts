@@ -19,14 +19,14 @@ const deployJWRToken: DeployFunction = async function (hre: HardhatRuntimeEnviro
     with a random private key in the .env file (then used on hardhat.config.ts)
     You can run the `yarn account` command to check your balance in every network.
   */
-  const { deployer } = await hre.getNamedAccounts();
+  const { deployer, wallet } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
   const tokenInitialSupply = 10000;
 
   await deploy("JWRToken", {
     from: deployer,
     // Contract constructor arguments
-    args: [tokenInitialSupply, process.env.OWNER_ADDRESS],
+    args: [tokenInitialSupply, wallet],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
