@@ -44,7 +44,7 @@ const Owner: NextPage = () => {
 
   if (!ownerIsConnected)
     return (
-      <div className="flex bg-base-300 w-full mt-16 px-8 py-12 justify-center gap-12">
+      <div className="flex bg-base-300 w-full px-8 py-12 justify-center gap-12">
         <div role="alert" className="alert alert-error">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -65,8 +65,8 @@ const Owner: NextPage = () => {
     );
 
   return (
-    <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12 justify-center gap-12">
-      <h1 className="text-lg font-bold">Owner Section</h1>
+    <div className="flex-grow bg-base-300 w-full px-8 py-12 justify-center gap-12">
+      <h1 className="text-4xl font-bold">Owner Section</h1>
       <div className="flex w-full mt-16 px-8 py-12 justify-center gap-12">
         <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
           <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-s rounded-3xl h-full justify-center">

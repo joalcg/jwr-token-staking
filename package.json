@@ -47,8 +47,6 @@
     "node": ">=18.18.0"
   },
   "dependencies": {
-    "ethers": "^6.13.3",
-    "nextjs": "^0.0.3",
-    "se-2": "file:"
+    "nextjs": "^0.0.3"
   }
 }
