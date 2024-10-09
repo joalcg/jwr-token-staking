@@ -2,15 +2,17 @@ import { Address } from "./scaffold-eth";
 import { formatEther } from "viem";
 import { useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
 
-type StakingEventsListProps = {
-  title: string;
-  event: string;
+type StakedEventArgs = {
+  user: string;
+  amount: bigint;
 };
 
-export const StakingEventsList = <T extends { toString: () => string } | undefined = string>({
-  event,
-  title,
-}: StakingEventsListProps) => {
+type StakingEventsListProps = {
+  title: string;
+  event: "OwnershipTransferred" | "Paused" | "RewardClaimed" | "Staked" | "Unpaused" | "Withdrawn";
+};
+
+export const StakingEventsList = ({ event, title }: StakingEventsListProps) => {
   const { data: events, isLoading } = useScaffoldEventHistory({
     contractName: "StakingContract",
     eventName: event,
@@ -44,12 +46,14 @@ export const StakingEventsList = <T extends { toString: () => string } | undefin
                 </tr>
               ) : (
                 events?.map((event, index) => {
+                  const args = event.args as StakedEventArgs;
+
                   return (
                     <tr key={index}>
                       <td className="text-center">
-                        <Address address={event.args.user} />
+                        <Address address={args.user} />
                       </td>
-                      <td>{formatEther(event.args?.amount || 0n)}</td>
+                      <td>{formatEther(args.amount || 0n)}</td>
                     </tr>
                   );
                 })

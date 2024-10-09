@@ -66,17 +66,19 @@ export const InputButton = <T extends { toString: () => string } | undefined = s
   return (
     <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl indicator">
       <div className={`flex border-2 border-base-300 bg-base-200 rounded-full text-accent ${modifier}`}>
-        {useInput && <input
-          className="input input-ghost focus-within:border-transparent focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
-          placeholder={placeholder}
-          name={name}
-          defaultValue={value?.toString()}
-          disabled={disabled}
-          autoComplete="off"
-          ref={inputRef}
-          onFocus={onFocus}
-          aria-label={name}
-        />}
+        {useInput && (
+          <input
+            className="input input-ghost focus-within:border-transparent focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
+            placeholder={placeholder}
+            name={name}
+            defaultValue={value?.toString()}
+            disabled={disabled}
+            autoComplete="off"
+            ref={inputRef}
+            onFocus={onFocus}
+            aria-label={name}
+          />
+        )}
 
         <button
           className={`btn btn-primary h-[2.2rem] min-h-[2.2rem] ${pausedClass}`}

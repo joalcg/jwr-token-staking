@@ -2,26 +2,35 @@ import { Address } from "./scaffold-eth";
 import { formatEther } from "viem";
 import { useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
 
+type TokenEventArgs = {
+  from?: string;
+  owner?: string;
+  to?: string;
+  spender?: string;
+  amount: bigint;
+};
+
 type TokenEventsListProps = {
   title: string;
-  event: string;
+  event: "Approval" | "OwnershipTransferred" | "Transfer";
   label1: string;
   label2: string;
   label3: string;
-  key1: string;
-  key2: string;
 };
 
-export const TokenEventsList = <T extends { toString: () => string } | undefined = string>({
-  event,
-  title,
-  label1,
-  label2,
-  label3,
-  key1,
-  key2,
-}: TokenEventsListProps) => {
-  const { data: events, isLoading } = useScaffoldEventHistory({
+const getAddresses = (args: TokenEventArgs, event: string) => {
+  if (event === "Transfer") {
+    return { addr1: args.from, addr2: args.to };
+  }
+  return { addr1: args.owner, addr2: args.spender };
+};
+
+export const TokenEventsList = ({ event, title, label1, label2, label3 }: TokenEventsListProps) => {
+  const {
+    data: events,
+    isLoading,
+    error,
+  } = useScaffoldEventHistory({
     contractName: "JWRToken",
     eventName: event,
     fromBlock: 0n,
@@ -36,6 +45,8 @@ export const TokenEventsList = <T extends { toString: () => string } | undefined
         <div className="flex justify-center items-center mt-8">
           <span className="loading loading-spinner loading-lg"></span>
         </div>
+      ) : error ? (
+        <div className="text-red-500 text-center mt-4">Error fetching events: {error.message}</div>
       ) : (
         <div className="overflow-x-auto shadow-lg">
           <table className="table table-zebra w-full">
@@ -54,16 +65,19 @@ export const TokenEventsList = <T extends { toString: () => string } | undefined
                   </td>
                 </tr>
               ) : (
-                events?.map((event, index) => {
+                events.map((eventLog, index) => {
+                  const args = eventLog.args as unknown as TokenEventArgs;
+                  const { addr1, addr2 } = getAddresses(args, event);
+
                   return (
-                    <tr key={index}>
+                    <tr key={`${event}-${index}`}>
                       <td className="text-center">
-                        <Address address={event.args[key1]} />
+                        <Address address={addr1 || "N/A"} />
                       </td>
                       <td className="text-center">
-                        <Address address={event.args[key2]} />
+                        <Address address={addr2 || "N/A"} />
                       </td>
-                      <td>{formatEther(event.args?.amount || 0n)}</td>
+                      <td>{formatEther(args.amount)}</td>
                     </tr>
                   );
                 })

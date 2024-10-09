@@ -12,15 +12,7 @@ const EventsToken: NextPage = () => {
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
           <div className="flex items-center flex-col flex-grow pt-10">
             {/* Stake Events */}
-            <TokenEventsList
-              title="Transfer Token Events"
-              event="Transfer"
-              label1="From"
-              label2="To"
-              label3="Amount"
-              key1="from"
-              key2="to"
-            />
+            <TokenEventsList title="Transfer Token Events" event="Transfer" label1="From" label2="To" label3="Amount" />
           </div>
         </div>
 
@@ -40,8 +32,6 @@ const EventsToken: NextPage = () => {
             label1="Owner"
             label2="Spend"
             label3="Amount"
-            key1="owner"
-            key2="spender"
           />
         </div>
       </div>
