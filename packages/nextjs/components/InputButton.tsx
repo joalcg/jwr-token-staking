@@ -15,7 +15,7 @@ type InputButtonProps<T> = {
       title?: string;
       titleId?: string;
     } & React.RefAttributes<SVGSVGElement>
-  > | null; // Allow Icon to be nullable
+  > | null;
   IconTitle?: string;
   IconClass?: string;
   position: "before" | "after";
@@ -75,13 +75,13 @@ export const InputButton = <T extends { toString: () => string } | undefined = s
           autoComplete="off"
           ref={inputRef}
           onFocus={onFocus}
-          aria-label={name} // Adding aria-label for accessibility
+          aria-label={name}
         />}
 
         <button
           className={`btn btn-primary h-[2.2rem] min-h-[2.2rem] ${pausedClass}`}
           onClick={clickCallback}
-          aria-label={btnLabel} // Adding aria-label for the button
+          aria-label={btnLabel}
         >
           {position === "before" && Icon && <Icon title={IconTitle} className={IconClass} />}
           {btnLabel}

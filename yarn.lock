@@ -2082,12 +2082,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@se-2/nextjs@workspace:packages/nextjs":
+"@se-2/nextjs@file:, @se-2/nextjs@workspace:packages/nextjs":
   version: 0.0.0-use.local
   resolution: "@se-2/nextjs@workspace:packages/nextjs"
   dependencies:
     "@heroicons/react": ^2.1.5
     "@rainbow-me/rainbowkit": 2.1.6
+    "@se-2/nextjs": "file:"
     "@tanstack/react-query": ^5.28.6
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@types/node": ^18.19.50
@@ -5831,7 +5832,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"elliptic@npm:6.5.4":
+"elliptic@npm:6.5.4, elliptic@npm:^6.5.2, elliptic@npm:^6.5.4":
   version: 6.5.4
   resolution: "elliptic@npm:6.5.4"
   dependencies:
@@ -5846,7 +5847,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"elliptic@npm:^6.5.2, elliptic@npm:^6.5.4, elliptic@npm:^6.5.7":
+"elliptic@npm:^6.5.7":
   version: 6.5.7
   resolution: "elliptic@npm:6.5.7"
   dependencies:
@@ -11850,7 +11851,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"se-2@workspace:.":
+"se-2@file:, se-2@workspace:.":
   version: 0.0.0-use.local
   resolution: "se-2@workspace:."
   dependencies:
@@ -11861,6 +11862,7 @@ __metadata:
     husky: ^8.0.1
     lint-staged: ^13.0.3
     nextjs: ^0.0.3
+    se-2: "file:"
   languageName: unknown
   linkType: soft
 

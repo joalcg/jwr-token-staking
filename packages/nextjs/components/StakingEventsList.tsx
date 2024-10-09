@@ -2,7 +2,7 @@ import { Address } from "./scaffold-eth";
 import { formatEther } from "viem";
 import { useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
 
-type StakingEventsListProps<T> = {
+type StakingEventsListProps = {
   title: string;
   event: string;
 };
@@ -10,7 +10,7 @@ type StakingEventsListProps<T> = {
 export const StakingEventsList = <T extends { toString: () => string } | undefined = string>({
   event,
   title,
-}: StakingEventsListProps<T>) => {
+}: StakingEventsListProps) => {
   const { data: events, isLoading } = useScaffoldEventHistory({
     contractName: "StakingContract",
     eventName: event,

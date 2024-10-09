@@ -2,7 +2,7 @@ import { Address } from "./scaffold-eth";
 import { formatEther } from "viem";
 import { useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
 
-type TokenEventsListProps<T> = {
+type TokenEventsListProps = {
   title: string;
   event: string;
   label1: string;
@@ -20,7 +20,7 @@ export const TokenEventsList = <T extends { toString: () => string } | undefined
   label3,
   key1,
   key2,
-}: TokenEventsListProps<T>) => {
+}: TokenEventsListProps) => {
   const { data: events, isLoading } = useScaffoldEventHistory({
     contractName: "JWRToken",
     eventName: event,
