@@ -4,7 +4,11 @@ import { useState } from "react";
 import type { NextPage } from "next";
 import { Address as AddressType } from "viem";
 import { useAccount } from "wagmi";
-import { ArrowsRightLeftIcon, PauseCircleIcon, PlayCircleIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowsRightLeftIcon,
+  PauseCircleIcon,
+  PlayCircleIcon
+} from "@heroicons/react/24/outline";
 import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 const Owner: NextPage = () => {
@@ -59,7 +63,7 @@ const Owner: NextPage = () => {
               d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <span>Forbidden! owner only section.</span>
+          <span>Forbidden access! owner only section.</span>
         </div>
       </div>
     );
@@ -77,8 +81,8 @@ const Owner: NextPage = () => {
                 <p>Resume Staking Contract</p>
               </button>
             ) : (
-              <button className="btn btn-error">
-                <PauseCircleIcon className="h-8 w-8 fill-secondary" onClick={() => pauseUnpause("pause")} />
+              <button className="btn btn-error" onClick={() => pauseUnpause("pause")}>
+                <PauseCircleIcon className="h-8 w-8 fill-secondary" />
                 <p>Pause Staking Contract</p>
               </button>
             )}
