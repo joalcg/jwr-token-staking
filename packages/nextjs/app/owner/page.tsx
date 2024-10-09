@@ -4,11 +4,7 @@ import { useState } from "react";
 import type { NextPage } from "next";
 import { Address as AddressType } from "viem";
 import { useAccount } from "wagmi";
-import {
-  ArrowsRightLeftIcon,
-  PauseCircleIcon,
-  PlayCircleIcon
-} from "@heroicons/react/24/outline";
+import { ArrowsRightLeftIcon, PauseCircleIcon, PlayCircleIcon } from "@heroicons/react/24/outline";
 import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 const Owner: NextPage = () => {
