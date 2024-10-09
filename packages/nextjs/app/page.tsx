@@ -5,7 +5,7 @@ import { useAccount } from "wagmi";
 import { BuildingLibraryIcon, CircleStackIcon, FireIcon, WalletIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-eth";
 import { InputButton } from "~~/components/scaffold-eth/InputButton";
-import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
+import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 const Home: NextPage = () => {
   const { address: connectedAddress, isConnected } = useAccount();
@@ -25,6 +25,29 @@ const Home: NextPage = () => {
     contractName: "StakingContract",
     functionName: "paused",
   });
+
+  const { writeContractAsync: stakeTokens, isMining: isStaking } = useScaffoldWriteContract("StakingContract");
+
+  const onStakeClick = async (input: string | null) => {
+    try {
+      const amountInBigNumber = BigInt(input ?? "0");
+      console.log("amountInBigNumber", amountInBigNumber);
+      await stakeTokens({
+        functionName: "stake",
+        args: [amountInBigNumber], // Arguments for the stake function, such as the staking amount
+      });
+    } catch (error) {
+      console.error("Stake failed", error);
+    }
+  };
+
+  const onWithdrawClick = async () => {
+    console.log("onWithdrawClick");
+  };
+
+  const onClaimClick = async () => {
+    console.log("onClaimClick");
+  };
 
   const notConnectedMsg = (
     <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
@@ -81,10 +104,10 @@ const Home: NextPage = () => {
           <div className="flex justify-center gap-12 bg-base-300 w-full mt-16 px-8 py-12">
             <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
               <InputButton
-                btnLabel="Claim"
+                btnLabel={isStaking ? "Staking" : "Stake"}
                 paused={stakingPaused}
-                onClick={(value: string | null) => console.log("Stake ", value)}
                 value={""}
+                onClick={onStakeClick}
                 position={"before"}
                 Icon={CircleStackIcon}
                 IconClass="h-8 w-8 fill-secondary"
@@ -95,7 +118,7 @@ const Home: NextPage = () => {
               <InputButton
                 btnLabel="Withdraw"
                 paused={stakingPaused}
-                onClick={(value: string | null) => console.log("Withdraw ", value)}
+                onClick={onWithdrawClick}
                 value={""}
                 position={"before"}
                 Icon={BuildingLibraryIcon}
@@ -107,7 +130,7 @@ const Home: NextPage = () => {
               <InputButton
                 btnLabel="Claim"
                 paused={stakingPaused}
-                onClick={(value: string | null) => console.log("Claim ", value)}
+                onClick={onClaimClick}
                 value={""}
                 position={"after"}
                 Icon={FireIcon}
