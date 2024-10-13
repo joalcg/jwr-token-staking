@@ -49,7 +49,7 @@
 8. Funciones `pause` y `unpause` como mecanismos de seguridad para pausar contrato, permisible únicamente para el dueño.
 9. Registro de evento para `stake`, `withdraw`, `claimRewards`.
 
-## 2.2.1 Explicación de contrato `JWRToken`
+## 2.2.2 Contrato `JWRToken`
 
 Contrato de token `Ownable` conforme con `ERC20` con funciones básicas de `_mint()`,`approve()`,`allowance()`,`transfer()`, `transferFrom()`,`balanceOf()`,`totalSupply()`. 
 
