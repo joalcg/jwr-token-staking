@@ -1,4 +1,4 @@
-# dependencies
+x# dependencies
 node_modules
 
 # yarn
@@ -14,6 +14,7 @@ node_modules
 
 # misc
 .DS_Store
+packages/nextjs/contracts/deployedContracts.ts
 
 # IDE
 .vscode
