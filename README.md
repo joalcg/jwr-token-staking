@@ -57,7 +57,7 @@ Contrato de token `Ownable` conforme con `ERC20` con funciones básicas de `_min
 
 ## 2.3.1 Detalles de interfaz web
 
-1. Interfaz web basada en proyecto demo de `hardhat` y modificado para contrato `StakingContract`
+1. Interfaz web basada en proyecto demo de `HardHat` y modificado para contrato `StakingContract`
 2. Páginas de **`Home/Staking`**, **`Owner Functions`**, **`Events`**, **`Debug Contract`**.
 3. Página de **`Home/Staking`** con botones de `stake`, `withdraw` y `claimRewards`
 4. Página de **`Owner functions`** con operaciones para **pausar contrato** (`Pause Staking Contract`) y **cambiar de dueño** (`Set new owner: <<address>> Change`).
@@ -192,35 +192,35 @@ Contrato de token `Ownable` conforme con `ERC20` con funciones básicas de `_min
 # 🏗 Scaffold-ETH 2 (README.md original del proyecto base)
 
 <h4 align="center">
-  <a href="https://docs.scaffoldeth.io">Documentation</a> |
+  <a href="https://docs.scaffoldeth.io">Documentación</a> |
   <a href="https://scaffoldeth.io">Website</a>
 </h4>
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+🧪 Un _toolkit_ actualizado y de código abierto (_open-source_) para construir aplicaciones descentralizadas (**`DApps`**) en _blockchain_ de _Ethereum_. Está diseñado para facilitarle a los desarrolladores la creación y despliegue de contratos inteligentes y crear interfaces de usuario que interactúen con esos contratos.
 
-⚙️ Built using NextJS, RainbowKit, Hardhat, Wagmi, Viem, and Typescript.
+⚙️ Desarrollado con `NextJS`, `RainbowKit`, `Hardhat`, `Wagmi`, `Viem` y `Typescript`.
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+- ✅ **Adaptación en caliente de contrato**: Tu _frontend_ se auto adapta a tu contrato inteligente a como lo vas editando.
+- 🪝 **[_Hooks_ personalizados](https://docs.scaffoldeth.io/hooks/)**: Colección de _wrappers_ de _hooks_ en React alrededor de [wagmi](https://wagmi.sh/) para simplificar interacciones con contratos inteligentes con autocomplete de typescript.
+- 🧱 [**Componentes**](https://docs.scaffoldeth.io/components/): Colección de componentes comunes de web3  para construir rápidamente tu _frontend_.
+- 🔥 **Billeteras de quemado y _faucet_ locales**: Prueba rápidamente tu  aplicación usando billeteras de quemados y _faucet_ (fuente de tokens) generada localmente.
+- 🔐 **Integración con proveedores de billeteras (_Wallet_)**: Conéctate a diferentes proveedores de billetera e interactúa con la red _Ethereum_.
 
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
+![Tab para _debug_  de contratos](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
 
-## Requirements
+## Requisitos
 
-Before you begin, you need to install the following tools:
+Antes de empezar, necesitas instalar las siguientes herramientas:
 
 - [Node (>= v18.18)](https://nodejs.org/en/download/)
 - Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
 - [Git](https://git-scm.com/downloads)
 
-## Quickstart
+## Inicio rápido (_Quickstart_)
 
-To get started with Scaffold-ETH 2, follow the steps below:
+Para empezar a usar _Scaffold-ETH 2_, sigue los siguientes pasos:
 
-1. Clone this repo & install dependencies
+1. Clona este repo e instala dependencias
 
 ```
 git clone https://github.com/scaffold-eth/scaffold-eth-2.git
@@ -228,34 +228,34 @@ cd scaffold-eth-2
 yarn install
 ```
 
-2. Run a local network in the first terminal:
+2. Despliega una red local en un primer terminal:
 
 ```
 yarn chain
 ```
 
-This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `hardhat.config.ts`.
+Este comando inicia una red local _Ethereum_ usando Hardhat. La red corre en tu máquina local y puede ser usada para prueba y desarrollo. Puedes personalizar la configuración de red en `hardhat.config.ts`.
 
-3. On a second terminal, deploy the test contract:
+3. En un segundo terminal, despliega el contrato:
 
 ```
 yarn deploy
 ```
 
-This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/hardhat/deploy` to deploy the contract to the network. You can also customize the deploy script.
+Este comando despliega una prueba de tu contrato inteligente en tu red local. El contrato se localiza en  `packages/hardhat/contracts` y se puede modificar según tus necesidades. El comando `yarn deploy` usa el script de despliegue en `packages/hardhat/deploy` para desplegar el contrato en la red. También puedes personalizar el script de despliegue.
 
-4. On a third terminal, start your NextJS app:
+4. En un tercer terminal, inicializa tu app NextJS:
 
 ```
 yarn start
 ```
 
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+Accede a tu app en `http://localhost:3000`. Puedes interactuar con tu contrato usando la página `Debug Contracts`. Puedes personalizar la configuración de app en `packages/nextjs/scaffold.config.ts`.
 
 
-## Documentation
+## Documentación
 
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
+Visita la documentación en [docs](https://docs.scaffoldeth.io) para aprender como empeza a construir con Scaffold-ETH 2.
 
-To know more about its features, check out our [website](https://scaffoldeth.io).
+Para saber más de las características, chequea el [website](https://scaffoldeth.io).
 
