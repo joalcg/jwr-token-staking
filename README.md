@@ -203,7 +203,7 @@ Contrato de token `Ownable` conforme con `ERC20` con funciones básicas de `_min
 - ✅ **Adaptación en caliente de contrato**: Tu _frontend_ se auto adapta a tu contrato inteligente a como lo vas editando.
 - 🪝 **[_Hooks_ personalizados](https://docs.scaffoldeth.io/hooks/)**: Colección de _wrappers_ de _hooks_ en React alrededor de [wagmi](https://wagmi.sh/) para simplificar interacciones con contratos inteligentes con autocomplete de typescript.
 - 🧱 [**Componentes**](https://docs.scaffoldeth.io/components/): Colección de componentes comunes de web3  para construir rápidamente tu _frontend_.
-- 🔥 **Billeteras de quemado y _faucet_ locales**: Prueba rápidamente tu  aplicación usando billeteras de quemados y _faucet_ (fuente de tokens) generada localmente.
+- 🔥 **Billeteras de quemado y _faucet_ locales**: Prueba rápidamente tu  aplicación usando billeteras de quemado y _faucet_ (fuente de tokens) generada localmente.
 - 🔐 **Integración con proveedores de billeteras (_Wallet_)**: Conéctate a diferentes proveedores de billetera e interactúa con la red _Ethereum_.
 
 ![Tab para _debug_  de contratos](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
