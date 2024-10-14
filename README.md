@@ -251,11 +251,3 @@ yarn start
 ```
 
 Accede a tu app en `http://localhost:3000`. Puedes interactuar con tu contrato usando la página `Debug Contracts`. Puedes personalizar la configuración de app en `packages/nextjs/scaffold.config.ts`.
-
-
-## Documentación
-
-Visita la documentación en [docs](https://docs.scaffoldeth.io) para aprender como empeza a construir con Scaffold-ETH 2.
-
-Para saber más de las características, chequea el [website](https://scaffoldeth.io).
-
